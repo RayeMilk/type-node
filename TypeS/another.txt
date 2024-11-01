@@ -1,0 +1,98 @@
+# ความแตกต่างระหว่าง `class`, `enum`, และ `interface` ใน TypeScript พร้อมตัวอย่าง
+
+ในภาษา TypeScript, `class`, `enum`, และ `interface` เป็นโครงสร้างที่ใช้ในการสร้างแบบจำลองข้อมูลและพฤติกรรมของโปรแกรม แต่มีความแตกต่างกันดังนี้:
+
+## 1. Class
+
+- **คำอธิบาย**: `class` เป็นแม่แบบสำหรับสร้างอ็อบเจ็กต์ (objects) ที่สามารถมีคุณสมบัติ (properties) และเมธอด (methods) ได้ `class` สามารถมีคอนสตรัคเตอร์ (constructor) และสามารถสืบทอด (inherit) จาก `class` อื่นได้
+- **การใช้งาน**: ใช้เมื่อคุณต้องการสร้างอ็อบเจ็กต์ที่มีพฤติกรรมและสถานะเฉพาะ
+
+### ตัวอย่าง
+
+```typescript:src/models/Person.ts
+// Person.ts
+
+class Person {
+    name: string;
+    age: number;
+
+    constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+    }
+
+    greet() {
+        return `Hello, my name is ${this.name}.`;
+    }
+}
+
+const person = new Person("Alice", 25);
+console.log(person.greet());
+```
+
+## 2. Enum
+
+- **คำอธิบาย**: `enum` ใช้เพื่อกำหนดชุดค่าคงที่ที่เป็นไปได้สำหรับตัวแปรหนึ่งๆ ช่วยให้โค้ดอ่านง่ายและป้องกันข้อผิดพลาดจากการใช้ค่าที่ไม่ถูกต้อง
+- **การใช้งาน**: ใช้เมื่อคุณต้องการกำหนดค่าที่เป็นไปได้แบบจำกัดให้กับตัวแปร
+
+### ตัวอย่าง
+
+```typescript:src/enums/Color.ts
+// Color.ts
+
+enum Color {
+    Red,
+    Green,
+    Blue
+}
+
+let favoriteColor: Color = Color.Green;
+console.log(`My favorite color is ${Color[favoriteColor]}.`);
+```
+
+## 3. Interface
+
+- **คำอธิบาย**: `interface` ใช้เพื่อกำหนดรูปแบบ (shape) ของอ็อบเจ็กต์ โดยระบุคุณสมบัติและเมธอดที่อ็อบเจ็กต์นั้นต้องมี `interface` เป็นเพียงสัญญา ไม่มีการนำไปใช้โดยตรงในการสร้างอ็อบเจ็กต์
+- **การใช้งาน**: ใช้เมื่อคุณต้องการกำหนดโครงสร้างของข้อมูลให้กับอ็อบเจ็กต์ที่ต่างกันหรือเพื่อการสืบทอดโครงสร้าง
+
+### ตัวอย่าง
+
+```typescript:src/interfaces/IPerson.ts
+// IPerson.ts
+
+interface IPerson {
+    name: string;
+    age: number;
+    greet(): string;
+}
+
+class Employee implements IPerson {
+    name: string;
+    age: number;
+    employeeId: number;
+
+    constructor(name: string, age: number, employeeId: number) {
+        this.name = name;
+        this.age = age;
+        this.employeeId = employeeId;
+    }
+
+    greet() {
+        return `Hello, my name is ${this.name} and my employee ID is ${this.employeeId}.`;
+    }
+}
+
+const employee = new Employee("Bob", 30, 101);
+console.log(employee.greet());
+```
+
+## สรุปความแตกต่าง
+
+| คุณสมบัติ       | Class                                  | Enum                                | Interface                                          |
+|-----------------|----------------------------------------|-------------------------------------|----------------------------------------------------|
+| **การสร้างอ็อบเจ็กต์** | ใช้เพื่อสร้างอ็อบเจ็กต์ที่มีคุณสมบัติและพฤติกรรม | ใช้เพื่อกำหนดชุดค่าคงที่ที่เป็นไปได้ | ไม่สามารถสร้างอ็อบเจ็กต์โดยตรง แต่ใช้กำหนดโครงสร้าง |
+| **การสืบทอด**      | สามารถสืบทอดจาก class อื่นได้              | ไม่สามารถสืบทอดจาก enum อื่นได้       | สามารถสืบทอดหรือขยาย interface อื่นได้            |
+| **การกำหนดค่า**     | สามารถมีคุณสมบัติแบบ dynamic และแฟ้มข้อมูล | กำหนดค่าคงที่ที่มีจำนวนจำกัด            | กำหนดโครงสร้างและสัญญาให้กับอ็อบเจ็กต์           |
+| **การใช้งานทั่วไป** | การสร้างอ็อบเจ็กต์ที่มีพฤติกรรมเฉพาะ     | การกำหนดประเภทของค่าที่เป็นไปได้        | การกำหนดรูปแบบของข้อมูลและการดำเนินการ              |
+
+หวังว่าคำอธิบายนี้จะช่วยให้คุณเข้าใจความแตกต่างระหว่าง `class`, `enum`, และ `interface` ใน TypeScript ได้ชัดเจนยิ่งขึ้น!
